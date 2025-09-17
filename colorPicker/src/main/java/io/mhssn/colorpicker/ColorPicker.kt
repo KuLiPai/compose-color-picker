@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.OutlinedButton
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
@@ -149,7 +150,7 @@ fun ColorPickerDialog(
                 modifier = Modifier
                     .width(IntrinsicSize.Max)
                     .clip(RoundedCornerShape(32.dp))
-                    .background(Color.White)
+                    .background(MaterialTheme.colors.background)
             ) {
                 Box(modifier = Modifier.padding(32.dp)) {
                     Column {

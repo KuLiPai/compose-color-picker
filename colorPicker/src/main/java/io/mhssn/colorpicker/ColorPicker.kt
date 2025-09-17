@@ -4,9 +4,10 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.OutlinedButton
-import androidx.compose.material.Text
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
@@ -26,6 +27,7 @@ import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import io.mhssn.colorpicker.ext.toHex
 import io.mhssn.colorpicker.ext.transparentBackground
+import io.mhssn.colorpicker.helper.onColor
 import io.mhssn.colorpicker.pickers.CircleColorPicker
 import io.mhssn.colorpicker.pickers.ClassicColorPicker
 import io.mhssn.colorpicker.pickers.RingColorPicker
@@ -133,13 +135,15 @@ fun ColorPickerDialog(
     onDismissRequest: () -> Unit,
     properties: DialogProperties = DialogProperties(),
     type: ColorPickerType = ColorPickerType.Classic(),
-    onPickedColor: (Color) -> Unit
+    onPickedColor: (Color) -> Unit,
+    backgroundColor: Color = MaterialTheme.colorScheme.background,
 ) {
+
     var showDialog by remember(show) {
         mutableStateOf(show)
     }
     var color by remember {
-        mutableStateOf(Color.White)
+        mutableStateOf(backgroundColor)
     }
     if (showDialog) {
         Dialog(onDismissRequest = {
@@ -150,7 +154,7 @@ fun ColorPickerDialog(
                 modifier = Modifier
                     .width(IntrinsicSize.Max)
                     .clip(RoundedCornerShape(32.dp))
-                    .background(MaterialTheme.colors.background)
+                    .background(backgroundColor)
             ) {
                 Box(modifier = Modifier.padding(32.dp)) {
                     Column {
@@ -175,7 +179,7 @@ fun ColorPickerDialog(
                                     withStyle(SpanStyle(color = Color.Gray)) {
                                         append("#")
                                     }
-                                    withStyle(SpanStyle(fontWeight = FontWeight.Bold)) {
+                                    withStyle(SpanStyle(fontWeight = FontWeight.Bold, color = backgroundColor.onColor()),) {
                                         append(color.toHex())
                                     }
                                 },
